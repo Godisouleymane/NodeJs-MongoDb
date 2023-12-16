@@ -12,10 +12,13 @@ const connexionMongoDb =  async()=>{
                 contenu : "Mon contenu",
             }, 
             {
-                titre : "Mon  2",
+                titre : "Mon titre 2",
                 contenu : "Mon contenu 2",
             }, 
-          
+            {
+                titre : "Mon titre 3",
+                contenu : "Mon contenu 3",
+            }, 
         ])
         console.log(result);
     } catch (error) {
