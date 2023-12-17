@@ -6,24 +6,24 @@ const connexionMongoDb =  async()=>{
         await mongoose.connect("mongodb://localhost/testMongoose");
         console.log('Connected successfully');
 
-        const result = await Blog.insertMany([
+        const result = await Blog.create(
             {
-                titre : "Mon titre",
+                // titre : "Mon titre",
                 contenu : "Mon contenu",
+                estArchive : "yes",
+                nbreLecture : 23,
+                categories : ["voyage", "decouverte"],
+                featuredBlog : '657e26bccf91e18dead14214',
+                auteur : {
+                    nom : 'Souleymane Sabiou',
+                    adresse : "Niamey",
+                }
             }, 
-            {
-                titre : "Mon titre 2",
-                contenu : "Mon contenu 2",
-            }, 
-            {
-                titre : "Mon titre 3",
-                contenu : "Mon contenu 3",
-            }, 
-        ])
+        )
         console.log(result);
     } catch (error) {
         console.log('Connection failed', error);
     }
 }
 
-connexionMongoDb()
+connexionMongoDb();
