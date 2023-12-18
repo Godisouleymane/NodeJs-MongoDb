@@ -7,29 +7,14 @@ const connexionMongoDb = async()=> {
         await mongoose.connect("mongodb://localhost/myDatabase");
         console.log('Connexion reussie avec mongoDb');
 
-        const user = await Etudiant.insertMany([
+        const user = await Etudiant.create(
             {
                 nom : "Souleymane",
-                prenom: "Sabiou Godi",
+                prenom : "Sabiou Godi",
                 age : 20,
-            },
-            {
-                nom : "Nueve",
-                prenom: "Louis",
-                age : 26,
-            },
-            {
-                nom : "Godi",
-                prenom: "Marvin",
-                age : 34,
-            },
-            {
-                nom : "Somane",
-                prenom: "Musole",
-                age : 51,
-            },
-        ])
-
+                classe : "Terminale"
+            }
+        )
         console.log(user);
        
     } catch (error) {
