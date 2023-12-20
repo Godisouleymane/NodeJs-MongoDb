@@ -18,9 +18,12 @@ const blogSchema = mongoose.Schema({
     },
     categories : {
         type : [String],
-        enum : ["decouverte", "voyage", "technologie"]
+        enum : ["decouverte", "Voyage", "technologie"]
     },
-    featuredBlog : mongoose.Types.ObjectId,
+    featuredBlog : {
+        type : mongoose.Types.ObjectId,
+        ref: "Blog",
+    },
     auteur : {
         nom: String,
         adresse : String,
@@ -29,6 +32,34 @@ const blogSchema = mongoose.Schema({
         type: Date,
         default : Date.now()
     },
+})
+
+blogSchema.methods.findMemeCategorie = function () {
+    return mongoose.model('Blog').find({
+        categories : {$in : this.categories}
+    })
+}
+
+blogSchema.statics.find2PremiersBlog = function (){
+    return mongoose.model("Blog").find().limit(2);
+}
+
+blogSchema.query.findNPremierBlog = function(nbre) {
+    return mongoose.model("Blog").find().limit(nbre);
+}
+
+blogSchema.virtual("libelleLecture").get(function(){
+    return "Ce blog a deja  ete visualisé " + this.nbreLecture + " fois"
+})
+
+
+blogSchema.pre("save", function(next){
+    console.log("Instruction avant enregistrement");
+    next();
+});
+
+blogSchema.post("save", function(doc, next){
+    console.log("Instruction apres enregistrement : \n", doc);
 })
 
 const model = mongoose.model('Blog', blogSchema);

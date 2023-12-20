@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Blog = require('./blog');
 
-const connexionMongoDb =  async()=>{
+const connexionMongoDb = async () => {
     try {
         await mongoose.connect("mongodb://localhost/testMongoose");
         console.log('Connected successfully');
@@ -21,8 +21,21 @@ const connexionMongoDb =  async()=>{
         //     }, 
         // )
 
-        const result = await Blog.findById('657e26bccf91e18dead14214').populate("featuredBlog")
-        console.log(result);
+        const blog = new Blog({
+            titre: "Voyage vers Zinder",
+            contenu: "Mon contenu 001",
+            estArchive: "yes",
+            nbreLecture: 3,
+            categories: ["Voyage", "decouverte"],
+            featuredBlog: '657e26bccf91e18dead14214',
+            auteur: {
+                nom: 'Souleymane Sabiou',
+                adresse: "Niamey",
+            }
+        })
+
+        const result = await blog.save()
+        console.log(result.libelleLecture);
     } catch (error) {
         console.log('Connection failed', error);
     }
